@@ -341,7 +341,8 @@ function renderGrid(){
   var ipads = STATE.ipads;
   var nIpads = ipads.length || 1;
   var totalCols = dates.length * nIpads;
-  var html = '<div class="grid' + (ui.mode==='day'?' day-mode':'') + '" style="grid-template-columns:92px repeat(' + totalCols + ',minmax(46px,1fr));">';
+  var gridMinWidth = 92 + totalCols * 46;
+  var html = '<div class="grid' + (ui.mode==='day'?' day-mode':'') + '" style="grid-template-columns:92px repeat(' + totalCols + ',minmax(46px,1fr));min-width:' + gridMinWidth + 'px;">';
   html += '<div class="cell head-corner" style="grid-row:span 2;">節數</div>';
   dates.forEach(function(dISO, idx){
     var info = STATE.calendar[dISO];
