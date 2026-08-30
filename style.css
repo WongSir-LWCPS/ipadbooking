@@ -280,7 +280,7 @@ input,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
    timetable stays white as its main color regardless of the viewer's
    dark-mode setting — scoped to the grid only; the appbar/toolbar chrome
    keeps its own always-dark navy styling untouched. */
-.grid-wrap{flex:1;overflow:auto;padding:14px;}
+.grid-wrap{flex:1;overflow:auto;padding:14px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x pan-y;}
 .grid{
   display:grid;
   border:1px solid var(--grid-border);
