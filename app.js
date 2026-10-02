@@ -20,7 +20,7 @@ var I18N = {
     nextWeek: '下一週', nextDay: '下一日',
     viewWeek: '週', viewDay: '日',
     periodCol: '節數',
-    icyReservedTag: 'ICT預留',
+    icyReservedTag: 'IT組預留',
     slotClosedTitle: '此節未開放借用',
     unitsSuffix: '部',
     noNotes: '沒有備註',
@@ -41,7 +41,7 @@ var I18N = {
     deleteBtn: '刪除', cancelBtn: '取消',
     saveChanges: '儲存變更', confirmBooking: '確認借用',
     otherOption: '其他',
-    icyReservationTitle: 'ICT 課堂預留',
+    icyReservationTitle: 'IT組預留',
     classShort: '班別',
     cycleWeekLabel: '循環日 / 週次',
     parityAll: '每週', parityOdd: '單週', parityEven: '雙週',
@@ -49,13 +49,13 @@ var I18N = {
     ipadBatchLabel: 'iPad 批次',
     durationLabel: '期間',
     dateRangeSep: ' 至 ',
-    reservationHint: '如需修改或取消此預留，請於「設定 → ICT預留」中刪除。',
+    reservationHint: '如需修改或取消此預留，請於「設定 → IT組預留」中刪除。',
     closeBtn: '關閉',
     settingsPasswordTitle: '系統設定',
     enterPasswordHint: '請輸入設定密碼以繼續',
     wrongPassword: '密碼錯誤，請重試。',
     confirmBtn: '確定',
-    tabIpad: 'iPad設備', tabPeriod: '課節設定', tabReservation: 'ICT預留', tabClear: '清除記錄',
+    tabIpad: 'iPad設備', tabPeriod: '課節設定', tabReservation: 'IT組預留', tabClear: '清除記錄',
     settingsCenterTitle: '系統設定中心',
     batchCode: '批次代號', nameLabel: '名稱', qtyShort: '數量',
     ipadNotePlaceholder: '例：PROCREATE (19部)',
@@ -71,16 +71,20 @@ var I18N = {
     periodFallbackPrefix: '課節',
     periodNamePlaceholder: '中文名稱',
     periodNameEnPlaceholder: '英文名稱（選填）',
-    reservationSettingsTitle: 'ICT 堂學期預留設定',
-    reservationSettingsDesc: '設定 ICT 課堂在指定循環日、課節長期佔用的 iPad 批次，教師將無法於該時段借用。',
+    reservationSettingsTitle: 'IT組預留設定',
+    reservationSettingsDesc: '設定 IT 組在指定循環日、課節長期佔用的 iPad 批次（例如 ICT 課堂、課外活動、樂天學滿FUN 等），教師將無法於該時段借用。',
+    calendarLabelField: '月曆顯示名稱',
+    calendarLabelPlaceholder: '選填，預設顯示「IT組預留」',
     startDate: '開始日期', endDate: '結束日期',
     weekLabel: '週次', cycleDayLabel: '循環日',
     otherNameLabel: '其他名稱',
     addReservationBtn: '＋ 加入預留',
-    noReservations: '目前沒有已設定的 ICT 預留。',
+    updateReservationBtn: '更新預留',
+    editBtn: '編輯',
+    noReservations: '目前沒有已設定的 IT組預留。',
     noteInlinePrefix: '　備註：',
     clearSettingsTitle: '預約記錄清除',
-    clearSettingsDesc: '清除指定日期之前的所有借用記錄（不影響 ICT 預留設定）。此操作無法復原。',
+    clearSettingsDesc: '清除指定日期之前的所有借用記錄（不影響 IT組預留設定）。此操作無法復原。',
     clearBeforeLabel: '清除此日期之前的記錄',
     clearRecordsBtn: '清除記錄',
     newLoanTitle: '新增外借記錄',
@@ -113,11 +117,12 @@ var I18N = {
     errQtyExceedPrefix: '租借數量不能超過所選批次的總數量上限（', errQtyExceedSuffix: ' 部）。',
     toastSavedIpadSettings: '已儲存 iPad 設定',
     toastSavedPeriodSettings: '已儲存課節設定',
-    confirmDeleteReservation: '確定要刪除此 ICT 預留嗎？',
+    confirmDeleteReservation: '確定要刪除此 IT組預留嗎？',
     errNeedDates: '請輸入有效的開始及結束日期',
     errNeedPeriodRes: '請至少選擇一個課節',
     errNeedIpadRes: '請至少選擇一批 iPad',
-    toastReservationAdded: '已加入 ICT 預留',
+    toastReservationAdded: '已加入 IT組預留',
+    toastReservationUpdated: '已更新預留',
     errPickDate: '請選擇日期',
     confirmClearRecordsPrefix: '確定要清除 ', confirmClearRecordsSuffix: ' 之前的所有借用記錄嗎？此操作無法復原。',
     toastRecordsCleared: '已清除記錄',
@@ -143,7 +148,7 @@ var I18N = {
     nextWeek: 'Next Week', nextDay: 'Next Day',
     viewWeek: 'Week', viewDay: 'Day',
     periodCol: 'Period',
-    icyReservedTag: 'ICT Reserved',
+    icyReservedTag: 'IT Reserved',
     slotClosedTitle: 'This period is not open for booking',
     unitsSuffix: ' units',
     noNotes: 'No notes',
@@ -164,7 +169,7 @@ var I18N = {
     deleteBtn: 'Delete', cancelBtn: 'Cancel',
     saveChanges: 'Save Changes', confirmBooking: 'Confirm Booking',
     otherOption: 'Other',
-    icyReservationTitle: 'ICT Reservation',
+    icyReservationTitle: 'IT Team Reservation',
     classShort: 'Class',
     cycleWeekLabel: 'Cycle Day / Week',
     parityAll: 'Every week', parityOdd: 'Odd weeks', parityEven: 'Even weeks',
@@ -172,13 +177,13 @@ var I18N = {
     ipadBatchLabel: 'iPad Batch',
     durationLabel: 'Duration',
     dateRangeSep: ' to ',
-    reservationHint: 'To modify or cancel this reservation, delete it under Settings → ICT Reservations.',
+    reservationHint: 'To modify or cancel this reservation, delete it under Settings → IT Team Reservations.',
     closeBtn: 'Close',
     settingsPasswordTitle: 'System Settings',
     enterPasswordHint: 'Please enter the settings password to continue',
     wrongPassword: 'Incorrect password, please try again.',
     confirmBtn: 'Confirm',
-    tabIpad: 'iPad Devices', tabPeriod: 'Period Settings', tabReservation: 'ICT Reservations', tabClear: 'Clear Records',
+    tabIpad: 'iPad Devices', tabPeriod: 'Period Settings', tabReservation: 'IT Team Reservations', tabClear: 'Clear Records',
     settingsCenterTitle: 'Settings Center',
     batchCode: 'Batch Code', nameLabel: 'Name', qtyShort: 'Quantity',
     ipadNotePlaceholder: 'e.g. PROCREATE (19 units)',
@@ -194,16 +199,20 @@ var I18N = {
     periodFallbackPrefix: 'Period',
     periodNamePlaceholder: 'Chinese name',
     periodNameEnPlaceholder: 'English name (optional)',
-    reservationSettingsTitle: 'ICT Term Reservation Settings',
-    reservationSettingsDesc: "Set which iPad batches are permanently occupied by ICT lessons on a given cycle day and period; teachers won't be able to book them during that time.",
+    reservationSettingsTitle: 'IT Team Reservation Settings',
+    reservationSettingsDesc: "Set which iPad batches the IT team permanently reserves on a given cycle day and period (e.g. ICT lessons, extracurricular activities, FunLearn Time); teachers won't be able to book them during that time.",
+    calendarLabelField: 'Calendar Display Name',
+    calendarLabelPlaceholder: 'Optional — defaults to "IT Reserved"',
     startDate: 'Start Date', endDate: 'End Date',
     weekLabel: 'Week', cycleDayLabel: 'Cycle Day',
     otherNameLabel: 'Other Name',
     addReservationBtn: '+ Add Reservation',
-    noReservations: 'No ICT reservations set.',
+    updateReservationBtn: 'Update Reservation',
+    editBtn: 'Edit',
+    noReservations: 'No IT team reservations set.',
     noteInlinePrefix: ' Note: ',
     clearSettingsTitle: 'Clear Booking Records',
-    clearSettingsDesc: 'Delete all booking records before a given date (does not affect ICT reservations). This cannot be undone.',
+    clearSettingsDesc: 'Delete all booking records before a given date (does not affect IT team reservations). This cannot be undone.',
     clearBeforeLabel: 'Clear records before this date',
     clearRecordsBtn: 'Clear Records',
     newLoanTitle: 'New Loan Record',
@@ -236,11 +245,12 @@ var I18N = {
     errQtyExceedPrefix: "Quantity cannot exceed the selected batches' total (", errQtyExceedSuffix: ' units).',
     toastSavedIpadSettings: 'iPad settings saved',
     toastSavedPeriodSettings: 'Period settings saved',
-    confirmDeleteReservation: 'Are you sure you want to delete this ICT reservation?',
+    confirmDeleteReservation: 'Are you sure you want to delete this IT team reservation?',
     errNeedDates: 'Please enter valid start and end dates',
     errNeedPeriodRes: 'Please select at least one period',
     errNeedIpadRes: 'Please select at least one iPad batch',
-    toastReservationAdded: 'ICT reservation added',
+    toastReservationAdded: 'IT team reservation added',
+    toastReservationUpdated: 'Reservation updated',
     errPickDate: 'Please select a date',
     confirmClearRecordsPrefix: 'Are you sure you want to clear all booking records before ', confirmClearRecordsSuffix: '? This cannot be undone.',
     toastRecordsCleared: 'Records cleared',
@@ -271,6 +281,7 @@ var TRASH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 var DRAG_SVG = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>';
 var LOAN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="10" height="15" rx="1.6"/><path d="M9 15.5h2"/><path d="M15 9h2.5a1.5 1.5 0 0 1 1.5 1.5V19a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2v-1"/></svg>';
 var GLOBE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9Z"/></svg>';
+var EDIT_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
 
 /* ===================== state ===================== */
 var STATE = defaultState();
@@ -414,6 +425,9 @@ function applyAction(state, action){
     case 'addReservation':
       state.reservations.push(action.reservation);
       break;
+    case 'updateReservation':
+      state.reservations = state.reservations.map(function(r){ return r.id === action.reservation.id ? action.reservation : r; });
+      break;
     case 'deleteReservation':
       state.reservations = state.reservations.filter(function(r){ return r.id !== action.id; });
       break;
@@ -458,6 +472,7 @@ function syncAction(action){
     case 'saveIpads': upd.ipads = action.ipads; break;
     case 'savePeriods': upd.periods = action.periods; break;
     case 'addReservation': upd['reservations.' + action.reservation.id] = action.reservation; break;
+    case 'updateReservation': upd['reservations.' + action.reservation.id] = action.reservation; break;
     case 'deleteReservation': upd['reservations.' + action.id] = firebase.firestore.FieldValue.delete(); break;
     case 'addLoan': upd['loans.' + action.loan.id] = action.loan; break;
     case 'deleteLoan': upd['loans.' + action.id] = firebase.firestore.FieldValue.delete(); break;
@@ -704,8 +719,9 @@ function renderIpadSlot(dISO, period, ip){
   var r = findReservation(dISO, period.id, ip.id);
   if (r) {
     var rlabel = (r.className === '其他') ? (r.otherClass || t('otherOption')) : r.className;
+    var rCalLabel = r.calendarLabel || t('icyReservedTag');
     return '<div class="slot reserved" data-act="open-reservation" data-res="' + r.id + '">' +
-      '<span class="slot-title slot-lock">' + escapeHtml(t('icyReservedTag')) + '</span><span class="slot-note">' + escapeHtml(rlabel) + '</span>' +
+      '<span class="slot-title slot-lock">' + escapeHtml(rCalLabel) + '</span><span class="slot-note">' + escapeHtml(rlabel) + '</span>' +
       '</div>';
   }
   if (!period.open) {
@@ -886,9 +902,10 @@ function reservationInfoHtml(m){
   var ipads = r.ipadIds.map(function(iid){ var ip = STATE.ipads.filter(function(x){return x.id===iid;})[0]; return ip?ip.code:iid; }).join('、');
   var cls = r.className==='其他' ? (r.otherClass||t('otherOption')) : r.className;
   var parityLabel = r.weekParity==='all' ? t('parityAll') : (r.weekParity==='odd' ? t('parityOdd') : t('parityEven'));
+  var calLabel = r.calendarLabel || t('icyReservedTag');
   return '<div class="modal-backdrop" data-backdrop="close-modal">' +
     '<div class="modal fixed-light" data-stop="1">' +
-      '<div class="modal-head"><h2>' + escapeHtml(t('icyReservationTitle')) + '</h2><button class="icon-btn modal-close" data-act="close-modal">' + CLOSE_SVG + '</button></div>' +
+      '<div class="modal-head"><h2>' + escapeHtml(calLabel) + '</h2><button class="icon-btn modal-close" data-act="close-modal">' + CLOSE_SVG + '</button></div>' +
       '<div class="modal-body">' +
         '<div class="field"><label>' + escapeHtml(t('classShort')) + '</label><div>' + escapeHtml(cls) + '</div></div>' +
         '<div class="field"><label>' + escapeHtml(t('cycleWeekLabel')) + '</label><div>' + escapeHtml(r.day) + '　（' + escapeHtml(parityLabel) + '）</div></div>' +
@@ -936,14 +953,15 @@ function submitPassword(){
 /* ===================== settings ===================== */
 var draftIpads = null;
 var draftPeriods = null;
+var editingReservationId = null;
 
 function openSettings(){
   closeTransientUI(); renderShell();
   if (ui.settingsAuthed) { ui.settingsOpen = true; ui.settingsTab='ipad'; renderSettingsRoot(); }
   else openPasswordGate();
 }
-function closeSettings(){ ui.settingsOpen = false; draftIpads = null; draftPeriods = null; document.getElementById('settings-root').innerHTML=''; renderShell(); }
-function switchSettingsTab(tab){ ui.settingsTab = tab; if(tab==='ipad') draftIpads=null; if(tab==='period') draftPeriods=null; renderSettingsRoot(); }
+function closeSettings(){ ui.settingsOpen = false; draftIpads = null; draftPeriods = null; editingReservationId = null; document.getElementById('settings-root').innerHTML=''; renderShell(); }
+function switchSettingsTab(tab){ ui.settingsTab = tab; if(tab==='ipad') draftIpads=null; if(tab==='period') draftPeriods=null; editingReservationId=null; renderSettingsRoot(); }
 
 function renderSettingsRoot(){
   var root = document.getElementById('settings-root');
@@ -1019,7 +1037,7 @@ function periodRowHtml(p, idx){
     var checked = p.days.indexOf(k)>=0;
     return '<label><input type="checkbox" data-f="day" data-day="' + k + '" ' + (checked?'checked':'') + '/><span>' + wdLabels[k] + '</span></label>';
   }).join('');
-  return '<div class="setting-row" draggable="true" data-drag-idx="' + idx + '">' +
+  return '<div class="setting-row" draggable="false" data-drag-idx="' + idx + '">' +
     '<span class="drag-handle">' + DRAG_SVG + '</span>' +
     '<input class="row-input time" data-f="time" value="' + p.start + '-' + p.end + '" placeholder="08:25-08:55"/>' +
     '<input class="row-input name" data-f="name" value="' + escapeHtml(p.name) + '" placeholder="' + escapeHtml(t('periodNamePlaceholder')) + '"/>' +
@@ -1057,41 +1075,48 @@ function collectPeriodsFromDOM(){
 /* ---- Reservation settings ---- */
 function settingsReservationHtml(){
   var normalPeriods = STATE.periods.filter(function(p){ return p.category==='normal'; });
+  var editing = editingReservationId ? STATE.reservations.filter(function(r){return r.id===editingReservationId;})[0] : null;
   var periodBoxes = normalPeriods.map(function(p){
-    return '<label class="check-pill"><input type="checkbox" data-f="res-period" value="' + p.id + '"/>' + escapeHtml(periodName(p)) + '</label>';
+    var checked = (editing && editing.periodIds.indexOf(p.id)!==-1) ? ' checked' : '';
+    return '<label class="check-pill"><input type="checkbox" data-f="res-period" value="' + p.id + '"' + checked + '/>' + escapeHtml(periodName(p)) + '</label>';
   }).join('');
   var ipadBoxes = STATE.ipads.map(function(ip){
-    return '<label class="check-pill"><input type="checkbox" data-f="res-ipad" value="' + ip.id + '"/>' + escapeHtml(ip.code) + '</label>';
+    var checked = (editing && editing.ipadIds.indexOf(ip.id)!==-1) ? ' checked' : '';
+    return '<label class="check-pill"><input type="checkbox" data-f="res-ipad" value="' + ip.id + '"' + checked + '/>' + escapeHtml(ip.code) + '</label>';
   }).join('');
-  var classOptions = STATE.classes.map(function(c){ return '<option value="' + escapeHtml(c) + '">' + escapeHtml(c) + '</option>'; }).join('') + '<option value="其他">' + escapeHtml(t('otherOption')) + '</option>';
-  var dayOptions = [1,2,3,4,5,6].map(function(n){ return '<option value="Day ' + n + '">Day ' + n + '</option>'; }).join('');
+  var classOptions = STATE.classes.map(function(c){ return '<option value="' + escapeHtml(c) + '"' + (editing && editing.className===c?' selected':'') + '>' + escapeHtml(c) + '</option>'; }).join('') + '<option value="其他"' + (editing && editing.className==='其他'?' selected':'') + '>' + escapeHtml(t('otherOption')) + '</option>';
+  var dayOptions = [1,2,3,4,5,6].map(function(n){ var v = 'Day ' + n; return '<option value="' + v + '"' + (editing && editing.day===v?' selected':'') + '>' + v + '</option>'; }).join('');
   var list = STATE.reservations.map(function(r){
     var periods = r.periodIds.map(function(pid){ var p=STATE.periods.filter(function(x){return x.id===pid;})[0]; return p?periodName(p):pid; }).join('、');
     var ipads = r.ipadIds.map(function(iid){ var ip=STATE.ipads.filter(function(x){return x.id===iid;})[0]; return ip?ip.code:iid; }).join('、');
     var cls = r.className==='其他' ? (r.otherClass||t('otherOption')) : r.className;
     var parity = r.weekParity==='all'?t('parityAll'):(r.weekParity==='odd'?t('parityOdd'):t('parityEven'));
-    return '<div class="res-item"><div class="info"><span class="tag">' + escapeHtml(r.day) + '</span><span class="tag">' + escapeHtml(parity) + '</span><b>' + escapeHtml(cls) + '</b>　' + escapeHtml(periods) + '　' + escapeHtml(ipads) +
+    var calLabel = r.calendarLabel || t('icyReservedTag');
+    return '<div class="res-item' + (editingReservationId===r.id?' editing':'') + '"><div class="info"><span class="tag accent">' + escapeHtml(calLabel) + '</span><span class="tag">' + escapeHtml(r.day) + '</span><span class="tag">' + escapeHtml(parity) + '</span><b>' + escapeHtml(cls) + '</b>　' + escapeHtml(periods) + '　' + escapeHtml(ipads) +
       '<br/><span style="color:var(--text-muted)">' + escapeHtml(r.startDate) + escapeHtml(t('dateRangeSep')) + escapeHtml(r.endDate) + (r.note? escapeHtml(t('noteInlinePrefix'))+escapeHtml(r.note):'') + '</span></div>' +
+      '<button type="button" class="icon-only-btn" data-act="edit-reservation" data-id="' + r.id + '" title="' + escapeHtml(t('editBtn')) + '">' + EDIT_SVG + '</button>' +
       '<button type="button" class="icon-only-btn" data-act="remove-reservation" data-id="' + r.id + '" title="' + escapeHtml(t('deleteBtn')) + '">' + TRASH_SVG + '</button></div>';
   }).join('') || '<div class="settings-desc">' + escapeHtml(t('noReservations')) + '</div>';
 
   return '<h3>' + escapeHtml(t('reservationSettingsTitle')) + '</h3><div class="settings-desc">' + escapeHtml(t('reservationSettingsDesc')) + '</div>' +
     '<div class="two-col">' +
-      '<div class="field"><label>' + escapeHtml(t('startDate')) + '</label><input class="input" type="date" id="res-start"/></div>' +
-      '<div class="field"><label>' + escapeHtml(t('endDate')) + '</label><input class="input" type="date" id="res-end"/></div>' +
+      '<div class="field"><label>' + escapeHtml(t('startDate')) + '</label><input class="input" type="date" id="res-start" value="' + (editing?escapeHtml(editing.startDate):'') + '"/></div>' +
+      '<div class="field"><label>' + escapeHtml(t('endDate')) + '</label><input class="input" type="date" id="res-end" value="' + (editing?escapeHtml(editing.endDate):'') + '"/></div>' +
     '</div>' +
     '<div class="two-col">' +
-      '<div class="field"><label>' + escapeHtml(t('weekLabel')) + '</label><select class="input" id="res-parity"><option value="all">' + escapeHtml(t('parityAll')) + '</option><option value="odd">' + escapeHtml(t('parityOdd')) + '</option><option value="even">' + escapeHtml(t('parityEven')) + '</option></select></div>' +
+      '<div class="field"><label>' + escapeHtml(t('weekLabel')) + '</label><select class="input" id="res-parity"><option value="all"' + (editing&&editing.weekParity==='all'?' selected':'') + '>' + escapeHtml(t('parityAll')) + '</option><option value="odd"' + (editing&&editing.weekParity==='odd'?' selected':'') + '>' + escapeHtml(t('parityOdd')) + '</option><option value="even"' + (editing&&editing.weekParity==='even'?' selected':'') + '>' + escapeHtml(t('parityEven')) + '</option></select></div>' +
       '<div class="field"><label>' + escapeHtml(t('cycleDayLabel')) + '</label><select class="input" id="res-day">' + dayOptions + '</select></div>' +
     '</div>' +
     '<div class="field"><label>' + escapeHtml(t('periodsShort')) + '</label><div class="check-grid">' + periodBoxes + '</div></div>' +
     '<div class="field"><label>' + escapeHtml(t('ipadBatchLabel')) + '</label><div class="check-grid">' + ipadBoxes + '</div></div>' +
     '<div class="two-col">' +
       '<div class="field"><label>' + escapeHtml(t('classShort')) + '</label><select class="input" id="res-class">' + classOptions + '</select></div>' +
-      '<div class="field" id="res-otherwrap" style="display:none;"><label>' + escapeHtml(t('otherNameLabel')) + '</label><input class="input" id="res-other"/></div>' +
+      '<div class="field" id="res-otherwrap" style="display:' + ((editing && editing.className==='其他') ? '' : 'none') + ';"><label>' + escapeHtml(t('otherNameLabel')) + '</label><input class="input" id="res-other" value="' + (editing?escapeHtml(editing.otherClass||''):'') + '"/></div>' +
     '</div>' +
-    '<div class="field"><label>' + escapeHtml(t('notesLabel')) + '</label><input class="input" id="res-note" placeholder="' + escapeHtml(t('optionalPlaceholder')) + '"/></div>' +
-    '<button class="btn primary" data-act="add-reservation">' + escapeHtml(t('addReservationBtn')) + '</button>' +
+    '<div class="field"><label>' + escapeHtml(t('calendarLabelField')) + '</label><input class="input" id="res-cal-label" placeholder="' + escapeHtml(t('calendarLabelPlaceholder')) + '" value="' + (editing?escapeHtml(editing.calendarLabel||''):'') + '"/></div>' +
+    '<div class="field"><label>' + escapeHtml(t('notesLabel')) + '</label><input class="input" id="res-note" placeholder="' + escapeHtml(t('optionalPlaceholder')) + '" value="' + (editing?escapeHtml(editing.note||''):'') + '"/></div>' +
+    '<button class="btn primary" data-act="add-reservation">' + escapeHtml(editing ? t('updateReservationBtn') : t('addReservationBtn')) + '</button>' +
+    (editing ? ' <button type="button" class="btn ghost" data-act="cancel-edit-reservation">' + escapeHtml(t('cancelBtn')) + '</button>' : '') +
     '<div class="res-list">' + list + '</div>';
 }
 function submitReservation(){
@@ -1103,13 +1128,22 @@ function submitReservation(){
   var ipadIds = Array.prototype.filter.call(document.querySelectorAll('[data-f="res-ipad"]'), function(cb){return cb.checked;}).map(function(cb){return cb.value;});
   var className = document.getElementById('res-class').value;
   var otherClass = document.getElementById('res-other').value.trim();
+  var calendarLabel = document.getElementById('res-cal-label').value.trim();
   var note = document.getElementById('res-note').value.trim();
   if (!start || !end || start > end) { showToast(t('errNeedDates')); return; }
   if (!periodIds.length) { showToast(t('errNeedPeriodRes')); return; }
   if (!ipadIds.length) { showToast(t('errNeedIpadRes')); return; }
-  doAction({ kind:'addReservation', reservation:{ id:uid('rs_'), startDate:start, endDate:end, weekParity:parity, day:day, periodIds:periodIds, ipadIds:ipadIds, className:className, otherClass:otherClass, note:note, createdAt:Date.now() } });
-  renderSettingsRoot();
-  showToast(t('toastReservationAdded'));
+  if (editingReservationId) {
+    var existing = STATE.reservations.filter(function(r){return r.id===editingReservationId;})[0];
+    doAction({ kind:'updateReservation', reservation:{ id:editingReservationId, startDate:start, endDate:end, weekParity:parity, day:day, periodIds:periodIds, ipadIds:ipadIds, className:className, otherClass:otherClass, calendarLabel:calendarLabel, note:note, createdAt: existing?existing.createdAt:Date.now() } });
+    editingReservationId = null;
+    renderSettingsRoot();
+    showToast(t('toastReservationUpdated'));
+  } else {
+    doAction({ kind:'addReservation', reservation:{ id:uid('rs_'), startDate:start, endDate:end, weekParity:parity, day:day, periodIds:periodIds, ipadIds:ipadIds, className:className, otherClass:otherClass, calendarLabel:calendarLabel, note:note, createdAt:Date.now() } });
+    renderSettingsRoot();
+    showToast(t('toastReservationAdded'));
+  }
 }
 
 /* ---- Clear records settings ---- */
@@ -1348,9 +1382,17 @@ function bindGlobalEvents(){
         var newPeriods = collectPeriodsFromDOM(); draftPeriods=null;
         doAction({ kind:'savePeriods', periods:newPeriods }); renderSettingsRoot(); showToast(t('toastSavedPeriodSettings')); break;
       case 'add-reservation': submitReservation(); break;
+      case 'edit-reservation':
+        editingReservationId = targetEl.getAttribute('data-id');
+        renderSettingsRoot();
+        break;
+      case 'cancel-edit-reservation':
+        editingReservationId = null;
+        renderSettingsRoot();
+        break;
       case 'remove-reservation':
         var rid = targetEl.getAttribute('data-id');
-        askConfirm(t('confirmDeleteReservation'), function(){ doAction({kind:'deleteReservation', id:rid}); renderSettingsRoot(); }, true);
+        askConfirm(t('confirmDeleteReservation'), function(){ if(editingReservationId===rid) editingReservationId=null; doAction({kind:'deleteReservation', id:rid}); renderSettingsRoot(); }, true);
         break;
       case 'do-clear': triggerClear(); break;
       case 'open-loans': openLoans(); break;
@@ -1420,6 +1462,29 @@ function bindGlobalEvents(){
     }
   });
 
+  /* Dragging a period row is only allowed when the drag is started from the
+     六點 drag-handle icon — otherwise clicking/selecting text inside the
+     row's inputs (e.g. the time field) too easily triggers an accidental
+     HTML5 drag, which re-renders the whole list from draftPeriods and
+     discards any unsaved edit the user was mid-typing. The row itself
+     stays draggable="false" until a mousedown/touchstart on its handle
+     flips it on; it is flipped back off as soon as the drag/gesture ends. */
+  function armRowDrag(e){
+    var handle = e.target.closest && e.target.closest('.drag-handle');
+    if (!handle) return;
+    var row = handle.closest('.setting-row[data-drag-idx]');
+    if (row) row.setAttribute('draggable', 'true');
+  }
+  function disarmAllRowDrag(){
+    Array.prototype.forEach.call(document.querySelectorAll('.setting-row[data-drag-idx]'), function(row){
+      row.setAttribute('draggable', 'false');
+    });
+  }
+  document.addEventListener('mousedown', armRowDrag);
+  document.addEventListener('touchstart', armRowDrag, {passive:true});
+  document.addEventListener('mouseup', disarmAllRowDrag);
+  document.addEventListener('touchend', disarmAllRowDrag);
+
   document.addEventListener('dragstart', function(e){
     var row = e.target.closest && e.target.closest('.setting-row[data-drag-idx]');
     if (!row) return;
@@ -1429,6 +1494,7 @@ function bindGlobalEvents(){
   document.addEventListener('dragend', function(e){
     var row = e.target.closest && e.target.closest('.setting-row');
     if (row) row.classList.remove('dragging');
+    disarmAllRowDrag();
   });
   document.addEventListener('dragover', function(e){
     if (e.target.closest && e.target.closest('#period-list')) e.preventDefault();
