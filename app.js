@@ -81,6 +81,12 @@ var I18N = {
     addReservationBtn: '＋ 加入預留',
     updateReservationBtn: '更新預留',
     editBtn: '編輯',
+    tempRentBtn: '臨時租用（取代預留）',
+    tempRentTag: '臨時',
+    newTempRentTitle: '新增臨時租用記錄',
+    editTempRentTitle: '編輯臨時租用記錄',
+    tempRentHint: '管理員專用：此臨時租用只會取代這一天的 IT組預留，刪除此記錄後預留會自動恢復。',
+    toastTempRentAdded: '已新增臨時租用記錄',
     noReservations: '目前沒有已設定的 IT組預留。',
     noteInlinePrefix: '　備註：',
     clearSettingsTitle: '預約記錄清除',
@@ -209,6 +215,12 @@ var I18N = {
     addReservationBtn: '+ Add Reservation',
     updateReservationBtn: 'Update Reservation',
     editBtn: 'Edit',
+    tempRentBtn: 'Temporary Rental (replace reservation)',
+    tempRentTag: 'Temp',
+    newTempRentTitle: 'New Temporary Rental',
+    editTempRentTitle: 'Edit Temporary Rental',
+    tempRentHint: 'Admin only: this temporary rental replaces the IT team reservation for this date only. Delete it and the reservation is restored automatically.',
+    toastTempRentAdded: 'Temporary rental added',
     noReservations: 'No IT team reservations set.',
     noteInlinePrefix: ' Note: ',
     clearSettingsTitle: 'Clear Booking Records',
@@ -355,6 +367,7 @@ function defaultState(){
 
 /* ===================== realtime sync (Firebase Firestore) ===================== */
 
+var lastSnapshotSig = null;
 function connectFirestore(){
   if (typeof firebase === 'undefined' || !window.FIREBASE_CONFIG || !window.FIREBASE_CONFIG.apiKey) {
     console.warn('[iPad借用表] 尚未設定 Firebase（見 firebase-config.js），目前僅本機運作，不會與其他裝置同步。');
@@ -383,11 +396,14 @@ function connectFirestore(){
         if (!data) return;
         if (data.ipads) STATE.ipads = data.ipads;
         if (data.periods) STATE.periods = data.periods;
+        var sig = JSON.stringify([data.ipads, data.periods, data.bookings, data.reservations, data.loans]);
+        if (sig === lastSnapshotSig) return; /* nothing actually changed — skip re-render */
+        lastSnapshotSig = sig;
         STATE.bookings = mapToArray(data.bookings);
         STATE.reservations = mapToArray(data.reservations);
         STATE.loans = mapToArray(data.loans);
         STATE.updatedAt = Date.now();
-        renderAll();
+        renderAll({ keepModal: true });
       }, function(err){
         showToast(t('toastConnLost') + (err && err.message ? err.message : ''));
       });
@@ -596,9 +612,13 @@ function periodName(p){
 }
 
 /* ===================== render: shell ===================== */
-function renderAll(){
+function renderAll(opts){
   renderShell();
-  renderModalRoot();
+  /* opts.keepModal: used by background realtime-sync re-renders so an open
+     modal (e.g. the password box or a half-filled booking form) is not torn
+     down and rebuilt — that wiped typed input and replayed the open animation. */
+  var mr = document.getElementById('modal-root');
+  if (!(opts && opts.keepModal && ui.modal && mr && mr.firstChild)) renderModalRoot();
   renderConfirmOverlay();
   renderDatePickerRoot();
   try { document.title = schoolNameDisplay() + ' – ' + t('appTitleSuffix'); } catch(e){}
@@ -710,7 +730,8 @@ function renderIpadSlot(dISO, period, ip){
     var label = (g.className === '其他') ? (g.otherClass || t('otherOption')) : g.className;
     var labelWithQty = label + '(' + (+g.qty || 0) + ')';
     var textColor = contrastTextColor(g.color);
-    return '<div class="slot filled" style="background:' + g.color + ';color:' + textColor + ';" data-act="open-group" data-group="' + g.id + '">' +
+    return '<div class="slot filled' + (g.temp?' temp':'') + '" style="background:' + g.color + ';color:' + textColor + ';" data-act="open-group" data-group="' + g.id + '">' +
+      (g.temp ? '<span class="slot-temp-tag">' + escapeHtml(t('tempRentTag')) + '</span>' : '') +
       '<span class="slot-title">' + escapeHtml(labelWithQty) + '</span>' +
       '<span class="slot-title2">' + escapeHtml(g.teacher) + '</span>' +
       (g.note ? '<span class="slot-note">' + escapeHtml(g.note) + '</span>' : '') +
@@ -720,7 +741,7 @@ function renderIpadSlot(dISO, period, ip){
   if (r) {
     var rlabel = (r.className === '其他') ? (r.otherClass || t('otherOption')) : r.className;
     var rCalLabel = r.calendarLabel || t('icyReservedTag');
-    return '<div class="slot reserved" data-act="open-reservation" data-res="' + r.id + '">' +
+    return '<div class="slot reserved" data-act="open-reservation" data-res="' + r.id + '" data-date="' + dISO + '" data-period="' + period.id + '" data-ipad="' + ip.id + '">' +
       '<span class="slot-title slot-lock">' + escapeHtml(rCalLabel) + '</span><span class="slot-note">' + escapeHtml(rlabel) + '</span>' +
       '</div>';
   }
@@ -769,6 +790,7 @@ function openBookingModal(opts){
   var group = editing ? STATE.bookings.filter(function(g){ return g.id===opts.groupId; })[0] : null;
   ui.modal = {
     type:'booking', editing: editing, groupId: editing ? group.id : null,
+    temp: editing ? !!group.temp : !!opts.temp,
     date: editing ? group.date : opts.date,
     selPeriods: editing ? group.periodIds.slice() : (opts.periodId ? [opts.periodId] : []),
     selIpads: editing ? group.ipadIds.slice() : (opts.ipadId ? [opts.ipadId] : []),
@@ -801,7 +823,7 @@ function syncBookingFieldsFromDOM(){
 function ipadCheckboxesHtml(m){
   return STATE.ipads.map(function(ip){
     var checked = m.selIpads.indexOf(ip.id) >= 0;
-    var blocked = m.selPeriods.some(function(pid){ var r = findReservation(m.date, pid, ip.id); return !!r; });
+    var blocked = !m.temp && m.selPeriods.some(function(pid){ var r = findReservation(m.date, pid, ip.id); return !!r; });
     var occupied = m.selPeriods.some(function(pid){ var g = findGroup(m.date, pid, ip.id); return g && g.id !== m.groupId; });
     var disabled = (blocked || occupied) && !checked;
     return '<label class="check-pill' + (checked?' checked':'') + (disabled?' disabled':'') + '">' +
@@ -829,7 +851,7 @@ function bookingModalHtml(m){
 
   return '<div class="modal-backdrop" data-backdrop="close-modal">' +
     '<div class="modal fixed-light" data-stop="1">' +
-      '<div class="modal-head"><div><h2>' + escapeHtml(m.editing?t('editBooking'):t('newBooking')) + '</h2><div class="sub">' + dateLabel + '</div></div>' +
+      '<div class="modal-head"><div><h2>' + escapeHtml(m.temp ? (m.editing?t('editTempRentTitle'):t('newTempRentTitle')) : (m.editing?t('editBooking'):t('newBooking'))) + '</h2><div class="sub">' + dateLabel + '</div></div>' +
         '<button class="icon-btn modal-close" data-act="close-modal">' + CLOSE_SVG + '</button></div>' +
       '<div class="modal-body">' +
         '<div class="two-col">' +
@@ -848,6 +870,7 @@ function bookingModalHtml(m){
             '<button type="button" class="btn small" data-act="reroll-color">' + escapeHtml(t('changeColor')) + '</button></div></div>' +
         '</div>' +
         '<div class="field"><label>' + escapeHtml(t('notesLabel')) + '</label><textarea class="input" id="f-note" placeholder="' + escapeHtml(t('optionalPlaceholder')) + '">' + escapeHtml(m.note) + '</textarea></div>' +
+        (m.temp ? '<div class="hint">' + escapeHtml(t('tempRentHint')) + '</div>' : '') +
         (m.error ? '<div class="msg-error">' + escapeHtml(m.error) + '</div>' : '') +
       '</div>' +
       '<div class="modal-foot">' +
@@ -879,13 +902,14 @@ function submitBooking(){
     note: m.note.trim(), qty: qtyVal, color: m.color,
     createdAt: m.editing ? undefined : Date.now(), updatedAt: Date.now()
   };
+  if (m.temp) group.temp = true;
   if (m.editing) {
     var old = STATE.bookings.filter(function(g){ return g.id===m.groupId; })[0];
     group.createdAt = old ? old.createdAt : Date.now();
   }
   closeModal();
   doAction({ kind:'upsertGroup', group: group });
-  showToast(m.editing ? t('toastBookingUpdated') : t('toastBookingAdded'));
+  showToast(m.editing ? t('toastBookingUpdated') : (m.temp ? t('toastTempRentAdded') : t('toastBookingAdded')));
 }
 
 function deleteBookingConfirmed(){
@@ -915,8 +939,18 @@ function reservationInfoHtml(m){
         (r.note ? '<div class="field"><label>' + escapeHtml(t('notesLabel')) + '</label><div>' + escapeHtml(r.note) + '</div></div>' : '') +
         '<div class="hint">' + escapeHtml(t('reservationHint')) + '</div>' +
       '</div>' +
-      '<div class="modal-foot"><button class="btn primary" data-act="close-modal">' + escapeHtml(t('closeBtn')) + '</button></div>' +
+      '<div class="modal-foot">' + (isReadOnly || !m.date ? '' : '<button class="btn" data-act="temp-rent">' + escapeHtml(t('tempRentBtn')) + '</button><span class="spacer"></span>') + '<button class="btn primary" data-act="close-modal">' + escapeHtml(t('closeBtn')) + '</button></div>' +
     '</div></div>';
+}
+/* Admin-only: replace this reservation (for this one date/period/iPad) with a
+   temporary rental booking. Needs the settings password if not yet unlocked. */
+function startTempRent(){
+  var m = ui.modal; if (!m || m.type!=='reservationInfo') return;
+  var slot = { date:m.date, periodId:m.periodId, ipadId:m.ipadId, temp:true };
+  if (ui.settingsAuthed) { openBookingModal(slot); return; }
+  ui.modal = { type:'password', error:false, target:'temprent', pending:slot };
+  renderModalRoot();
+  setTimeout(function(){ var el=document.getElementById('pw-input'); if(el) el.focus(); },30);
 }
 
 /* ===================== modal: password gate ===================== */
@@ -940,9 +974,11 @@ function submitPassword(){
   var val = el ? el.value : '';
   if (val === STATE.meta.settingsPassword) {
     var target = ui.modal.target || 'settings';
+    var pending = ui.modal.pending;
     ui.settingsAuthed = true;
     closeModal();
-    if (target === 'loans') { openLoansPanel(); }
+    if (target === 'temprent' && pending) { openBookingModal(pending); }
+    else if (target === 'loans') { openLoansPanel(); }
     else { ui.settingsOpen = true; ui.settingsTab = 'ipad'; renderSettingsRoot(); }
   } else {
     ui.modal.error = true; renderModalRoot();
@@ -1348,7 +1384,8 @@ function bindGlobalEvents(){
         openBookingModal({ groupId:targetEl.getAttribute('data-group') }); break;
       case 'open-reservation':
         var res = STATE.reservations.filter(function(r){ return r.id===targetEl.getAttribute('data-res'); })[0];
-        if (res) { ui.modal = { type:'reservationInfo', reservation: res }; renderModalRoot(); } break;
+        if (res) { ui.modal = { type:'reservationInfo', reservation: res, date:targetEl.getAttribute('data-date'), periodId:targetEl.getAttribute('data-period'), ipadId:targetEl.getAttribute('data-ipad') }; renderModalRoot(); } break;
+      case 'temp-rent': startTempRent(); break;
       case 'close-modal': closeModal(); break;
       case 'save-booking': if(!isReadOnly) submitBooking(); break;
       case 'delete-booking':

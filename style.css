@@ -649,3 +649,7 @@ textarea.input{resize:vertical;min-height:56px;}
   .grid-wrap{padding:8px;}
   .modal-body{padding:14px 16px;}
 }
+
+/* 臨時租用（取代 IT組預留）標記 */
+.slot .slot-temp-tag{font-size:8.5px;font-weight:800;line-height:1;padding:1px 4px;border-radius:3px;background:rgba(0,0,0,.22);color:#fff;margin-bottom:2px;letter-spacing:.02em;}
+.slot.filled.temp{outline:1.5px dashed rgba(0,0,0,.35);outline-offset:-3px;}
